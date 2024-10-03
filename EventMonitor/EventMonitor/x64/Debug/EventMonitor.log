@@ -1,0 +1,7 @@
+﻿  Building 'EventMonitor' with toolset 'WindowsKernelModeDriver10.0' and the 'Universal' target platform.
+  Stamping x64\Debug\EventMonitor.inf
+  Stamping [Version] section with DriverVer=10/03/2024,20.59.44.360
+  Device.cpp
+  Driver.cpp
+  Generating Code...
+LINK : fatal error LNK1105: cannot close file 'V:\KernelLand\EventMonitor\x64\Debug\EventMonitor.sys'; error code 1224

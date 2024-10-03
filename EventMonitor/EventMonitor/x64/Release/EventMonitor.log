@@ -1,0 +1,25 @@
+﻿  Building 'EventMonitor' with toolset 'WindowsKernelModeDriver10.0' and the 'Universal' target platform.
+  Stamping x64\Release\EventMonitor.inf
+  Stamping [Version] section with DriverVer=10/03/2024,21.0.54.421
+  Driver.cpp
+  EventMonitor.vcxproj -> V:\KernelLand\EventMonitor\x64\Release\EventMonitor.sys
+  Done Adding Additional Store
+  Successfully signed: V:\KernelLand\EventMonitor\x64\Release\EventMonitor.sys
+  
+  Driver is 'Universal'.
+  .........................
+  Signability test complete.
+  
+  Errors:
+  None
+  
+  Warnings:
+  None
+  
+  Catalog generation complete.
+  V:\KernelLand\EventMonitor\x64\Release\EventMonitor\eventmonitor.cat
+  Done Adding Additional Store
+  Successfully signed: V:\KernelLand\EventMonitor\x64\Release\EventMonitor\eventmonitor.cat
+  
+  "pwsh.exe" no se reconoce como un comando interno o externo,
+  programa o archivo por lotes ejecutable.
