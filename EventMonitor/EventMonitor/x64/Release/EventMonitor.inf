@@ -8,7 +8,7 @@ Class       = System ; TODO: specify appropriate Class
 ClassGuid   = {4d36e97d-e325-11ce-bfc1-08002be10318} ; TODO: specify appropriate ClassGuid
 Provider    = %ManufacturerName%
 CatalogFile = EventMonitor.cat
-DriverVer = 10/03/2024,21.0.54.421
+DriverVer = 10/22/2024,20.39.39.589
 PnpLockdown = 1
 
 [DestinationDirs]

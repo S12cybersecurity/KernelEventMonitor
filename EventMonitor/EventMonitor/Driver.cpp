@@ -1,5 +1,6 @@
 #include <ntddk.h>
 #include <wdf.h>
+#include "ObjectMonitor.h"
 
 void ownCreateProcessNotifyRoutine(HANDLE ppid, HANDLE pid, BOOLEAN create){
 	UNREFERENCED_PARAMETER(ppid);
@@ -20,6 +21,7 @@ void ownCreateThreadNotifyRoutine(HANDLE pid, HANDLE tid, BOOLEAN create) {
 void ownLoadImageNotifyRoutine(PUNICODE_STRING fullImageName, HANDLE processId, PIMAGE_INFO imageInfo) {
 	UNREFERENCED_PARAMETER(processId);
 	UNREFERENCED_PARAMETER(imageInfo);
+	UNREFERENCED_PARAMETER(fullImageName);
 
 	DbgPrintEx(DPFLTR_IHVDRIVER_ID, DPFLTR_ERROR_LEVEL, "LoadImageNotifyRoutine: %wZ loaded into process %d\n", fullImageName, processId);
 }
@@ -59,6 +61,14 @@ extern "C" NTSTATUS DriverEntry(PDRIVER_OBJECT DriverObject, PUNICODE_STRING Reg
     //DriverObject->MajorFunction[IRP_MJ_CREATE] = IrpCreateHandler;
     //DriverObject->MajorFunction[IRP_MJ_READ] = IrpReadHandler;
 
+	// create the registration for the object monitor
+	NTSTATUS objectMonitorResult = createRegistration();
+	if (!NT_SUCCESS(objectMonitorResult)) {
+		DbgPrintEx(DPFLTR_IHVDRIVER_ID, DPFLTR_ERROR_LEVEL, "Failed to create object monitor registration (0x%08X)\n", objectMonitorResult);
+		return objectMonitorResult;
+	}
+	DbgPrintEx(DPFLTR_IHVDRIVER_ID, DPFLTR_ERROR_LEVEL, "Driver loaded and started\n");
+
 	// suscribe to the process creation/termination event
 	NTSTATUS result = PsSetCreateProcessNotifyRoutine(ownCreateProcessNotifyRoutine, FALSE);
 	if (!NT_SUCCESS(result)) {
@@ -66,19 +76,21 @@ extern "C" NTSTATUS DriverEntry(PDRIVER_OBJECT DriverObject, PUNICODE_STRING Reg
 		return result;
 	}
 
+	// suscribe to the thread creation/termination event
 	NTSTATUS resultThread = PsSetCreateThreadNotifyRoutine(ownCreateThreadNotifyRoutine);
 	if (!NT_SUCCESS(resultThread)) {
 		DbgPrintEx(DPFLTR_IHVDRIVER_ID, DPFLTR_ERROR_LEVEL, "Failed to set CreateThreadNotifyRoutine (0x%08X)\n", resultThread);
 		return resultThread;
 	}
 
+	// suscribe to the module load event
 	NTSTATUS moduleResult = PsSetLoadImageNotifyRoutine(ownLoadImageNotifyRoutine);
 	if (!NT_SUCCESS(moduleResult)) {
 		DbgPrintEx(DPFLTR_IHVDRIVER_ID, DPFLTR_ERROR_LEVEL, "Failed to set LoadImageNotifyRoutine (0x%08X)\n", moduleResult);
 		return moduleResult;
 	}
 
-	DbgPrintEx(DPFLTR_IHVDRIVER_ID, DPFLTR_ERROR_LEVEL, "Driver loaded and started\n");
+	
 
 
     return STATUS_SUCCESS;

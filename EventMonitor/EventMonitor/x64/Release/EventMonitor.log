@@ -1,6 +1,6 @@
 ﻿  Building 'EventMonitor' with toolset 'WindowsKernelModeDriver10.0' and the 'Universal' target platform.
   Stamping x64\Release\EventMonitor.inf
-  Stamping [Version] section with DriverVer=10/03/2024,21.0.54.421
+  Stamping [Version] section with DriverVer=10/22/2024,20.39.39.589
   Driver.cpp
   EventMonitor.vcxproj -> V:\KernelLand\EventMonitor\x64\Release\EventMonitor.sys
   Done Adding Additional Store
